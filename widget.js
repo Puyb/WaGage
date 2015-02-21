@@ -7,7 +7,7 @@ WAF.define('WaGage', ['waf-core/widget'], function(widget) {
 
             this.node.innerHTML = '';
             var waGage = new JustGage({
-                id: this.id,
+                node: this.node,
                 value: this.value(),
                 min: this.min(),
                 max: this.max(),

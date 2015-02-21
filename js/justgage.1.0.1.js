@@ -11,16 +11,17 @@
 
 JustGage = function(config) { 
   
+  if (config.node) { config.id = config.node.id; }
   if (!config.id) {alert("Missing id parameter for gauge!"); return false;} 
-  if (!document.getElementById(config.id)) {alert("No element with id: \""+config.id+"\" found!"); return false;} 
-  
+  if (!config.node && !document.getElementById(config.id)) {alert("No element with id: \""+config.id+"\" found!"); return false;} 
+
   // configurable parameters
   this.config = 
   {
     // id : string 
     // this is container element id
     id : config.id,
-    
+    node: config.node || document.getElementById(config.id),
     // title : string
     // gauge title 
     title : (config.title) ? config.title : "Title",
@@ -112,13 +113,13 @@ JustGage = function(config) {
   this.originalValue = config.value;
   
   // canvas
-  this.canvas = Raphael(this.config.id, "100%", "100%");
+  this.canvas = Raphael(this.config.node, "100%", "100%");
   
   // canvas dimensions
   //var canvasW = document.getElementById(this.config.id).clientWidth;
   //var canvasH = document.getElementById(this.config.id).clientHeight;
-  var canvasW = getStyle(document.getElementById(this.config.id), "width").slice(0, -2) * 1;
-  var canvasH = getStyle(document.getElementById(this.config.id), "height").slice(0, -2) * 1;
+  var canvasW = getStyle(this.config.node, "width").slice(0, -2) * 1;
+  var canvasH = getStyle(this.config.node, "height").slice(0, -2) * 1;
   
   // widget dimensions
   var widgetW, widgetH;
